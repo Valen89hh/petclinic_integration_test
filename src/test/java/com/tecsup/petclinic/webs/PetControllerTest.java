@@ -34,7 +34,7 @@ public class PetControllerTest {
 	public void testFindAllPets() throws Exception {
 
 		//int NRO_RECORD = 73;
-		int ID_FIRST_RECORD = 1;
+		final int ID_FIRST_RECORD = 1;
 
 		this.mockMvc.perform(get("/pets"))
 				.andExpect(status().isOk())
@@ -91,11 +91,12 @@ public class PetControllerTest {
 		int OWNER_ID = 1;
 		String BIRTH_DATE = "2020-05-20";
 
-		PetDTO newPetTO = new PetDTO();
-		newPetTO.setName(PET_NAME);
-		newPetTO.setTypeId(TYPE_ID);
-		newPetTO.setOwnerId(OWNER_ID);
-		newPetTO.setBirthDate(BIRTH_DATE);
+		PetDTO newPetTO = PetDTO.builder()
+                .name(PET_NAME)
+                .typeId(TYPE_ID)
+                .ownerId(OWNER_ID)
+                .birthDate(BIRTH_DATE)
+                .build();
 
 		this.mockMvc.perform(post("/pets")
 						.content(om.writeValueAsString(newPetTO))
@@ -123,11 +124,13 @@ public class PetControllerTest {
 		int OWNER_ID = 1;
 		String BIRTH_DATE = "2020-05-20";
 
-		PetDTO newPetTO = new PetDTO();
-		newPetTO.setName(PET_NAME);
-		newPetTO.setTypeId(TYPE_ID);
-		newPetTO.setOwnerId(OWNER_ID);
-		newPetTO.setBirthDate(BIRTH_DATE);
+        PetDTO newPetTO = PetDTO.builder()
+                .name(PET_NAME)
+                .typeId(TYPE_ID)
+                .ownerId(OWNER_ID)
+                .birthDate(BIRTH_DATE)
+                .build();
+
 
 		ResultActions mvcActions = mockMvc.perform(post("/pets")
 						.content(om.writeValueAsString(newPetTO))
@@ -167,11 +170,12 @@ public class PetControllerTest {
 		int UP_OWNER_ID = 2;
 		int UP_TYPE_ID = 2;
 
-		PetDTO newPetTO = new PetDTO();
-		newPetTO.setName(PET_NAME);
-		newPetTO.setTypeId(TYPE_ID);
-		newPetTO.setOwnerId(OWNER_ID);
-		newPetTO.setBirthDate(BIRTH_DATE);
+        PetDTO newPetTO = PetDTO.builder()
+                .name(PET_NAME)
+                .typeId(TYPE_ID)
+                .ownerId(OWNER_ID)
+                .birthDate(BIRTH_DATE)
+                .build();
 
 		// CREATE
 		ResultActions mvcActions = mockMvc.perform(post("/pets")
@@ -184,11 +188,13 @@ public class PetControllerTest {
 		Integer id = JsonPath.parse(response).read("$.id");
 
 		// UPDATE
-		PetDTO upPetTO = new PetDTO();
-		upPetTO.setId(id);
-		upPetTO.setName(UP_PET_NAME);
-		upPetTO.setTypeId(UP_TYPE_ID);
-		upPetTO.setOwnerId(UP_OWNER_ID);
+
+        PetDTO upPetTO = PetDTO.builder()
+                .id(id)
+                .name(UP_PET_NAME)
+                .typeId(UP_TYPE_ID)
+                .ownerId(UP_OWNER_ID)
+                .build();
 
 		mockMvc.perform(put("/pets/"+id)
 						.content(om.writeValueAsString(upPetTO))
